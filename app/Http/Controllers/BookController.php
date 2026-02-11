@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Services\Book\BookService;
-use Inertia\Inertia;
 
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -15,7 +16,9 @@ class BookController extends Controller
      */
     public function index()
     {
-        return "hello world";
+        return Inertia::render("Books", [
+            "books" => Book::all()
+        ]);
     }
 
     /**
@@ -65,4 +68,16 @@ class BookController extends Controller
     {
         //
     }
+public function downloadOriginal(Book $book)
+{
+    if (!Storage::disk('public')->exists($book->pdf_original)) {
+        abort(404, "File not found");
+    }
+
+    return Storage::disk('public')->download($book->pdf_original, $book->title . '_original.pdf');
+}
+public function downloadPrintable(Book $book)
+{
+    return Storage::download($book->pdf_printable);
+}
 }
