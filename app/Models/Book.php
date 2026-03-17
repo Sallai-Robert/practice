@@ -17,7 +17,8 @@ class Book extends Model
         'author',
         'description',
         'pdf_original',
-        'pdf_printable'
+        'pdf_printable',
+        'user_id'
     ];
      /**
      * Generate uuid
@@ -30,5 +31,7 @@ class Book extends Model
             }
         });
     }
-
+    public function uploader(){
+        return $this->belongsTo(User::class, "user_id");
+    }
 }

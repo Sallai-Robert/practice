@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'books'
     ];
 
     /**
@@ -49,4 +50,9 @@ class User extends Authenticatable
             'two_factor_confirmed_at' => 'datetime',
         ];
     }
+   public function uploaded_books()
+{
+    // Since we used 'user_id' in the books table, Laravel finds this automatically
+    return $this->hasMany(Book::class, 'user_id');
+}
 }

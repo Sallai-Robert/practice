@@ -8,7 +8,7 @@ use App\Services\Book\BookService;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 class BookController extends Controller
 {
     /**
@@ -16,8 +16,9 @@ class BookController extends Controller
      */
     public function index()
     {
+        // dd(Auth::id());
         return Inertia::render("Books", [
-            "books" => Book::all()
+            "books" => Book::with('uploader')->get()
         ]);
     }
 

@@ -19,6 +19,8 @@ return new class extends Migration
             $table->text('description');
             $table->string('pdf_original');
             $table->string('pdf_printable');
+                $table->foreignId('user_id')->after('id')->nullable()->constrained()->cascadeOnDelete();
+
             $table->timestamps();
         });
     }
